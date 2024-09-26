@@ -93,7 +93,6 @@ exports.getIndex = (req, res, next) => {
 exports.getCart = (req, res, next) => {
   req.user
     .populate("cart.items.productId")
-    .execPopulate()
     .then((user) => {
       const products = user.cart.items;
       res.render("shop/cart", {
@@ -145,7 +144,6 @@ exports.getCheckout = (req, res, next) => {
   let total = 0;
   req.user
     .populate("cart.items.productId")
-    .execPopulate()
     .then((user) => {
       products = user.cart.items;
       total = 0;
@@ -214,7 +212,6 @@ exports.getCheckout = (req, res, next) => {
 exports.getCheckoutSuccess = (req, res, next) => {
   req.user
     .populate("cart.items.productId")
-    .execPopulate()
     .then((user) => {
       const products = user.cart.items.map((i) => {
         return { quantity: i.quantity, product: { ...i.productId._doc } };
